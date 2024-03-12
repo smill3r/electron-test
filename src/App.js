@@ -1,24 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import styles from "./App.module.css";
+import { Header } from "./components/header/header";
+import { TabBar } from "./components/tabBar/tabBar";
+import { useState } from "react";
 
 function App() {
+  const [content, setContent] = useState("Screening Tab Content");
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Header></Header>
+      <TabBar onSetActive={setContent}></TabBar>
+      <div className={styles.mainContent}>
+        <p>{content}</p>
+      </div>
+    </>
   );
 }
 
