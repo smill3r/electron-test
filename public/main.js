@@ -79,34 +79,8 @@ app.whenReady().then(() => {
   ipcMain.on("new-window", (event, params) => createWindow(params));
 
   ipcMain.on("show-context-menu", (event) => {
-    const template = [
-      {
-        label: "Minimize",
-        click: () => {
-          event.sender.send("context-menu-command", "minimize");
-        },
-      },
-      {
-        label: "New Window",
-        click: () => {
-          event.sender.send("context-menu-command", "new");
-        },
-      },
-      {
-        label: "Full Screen",
-        click: () => {
-          event.sender.send("context-menu-command", "maximize");
-        },
-      },
-      {
-        label: "Close",
-        click: () => {
-          event.sender.send("context-menu-command", "close");
-        },
-      },
-    ];
-
-    const menu = Menu.buildFromTemplate(template);
+    const menuItems = getMenuItems(event);
+    const menu = Menu.buildFromTemplate(menuItems);
     menu.popup({ window: BrowserWindow.fromWebContents(event.sender) });
   });
 
@@ -132,3 +106,32 @@ app.on("activate", () => {
 });
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+
+const getMenuItems = (event) => {
+  return [
+    {
+      label: "Minimize",
+      click: () => {
+        event.sender.send("context-menu-command", "minimize");
+      },
+    },
+    {
+      label: "New Window",
+      click: () => {
+        event.sender.send("context-menu-command", "new");
+      },
+    },
+    {
+      label: "Full Screen",
+      click: () => {
+        event.sender.send("context-menu-command", "maximize");
+      },
+    },
+    {
+      label: "Close",
+      click: () => {
+        event.sender.send("context-menu-command", "close");
+      },
+    },
+  ];
+};
